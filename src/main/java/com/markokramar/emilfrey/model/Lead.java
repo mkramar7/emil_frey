@@ -1,6 +1,7 @@
 package com.markokramar.emilfrey.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -47,5 +48,21 @@ public class Lead {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<Car> getCarsOfInterest() {
+        return carsOfInterest;
+    }
+
+    public void setCarsOfInterest(Set<Car> carsOfInterest) {
+        this.carsOfInterest = carsOfInterest;
+    }
+
+    public void addCarOfInterest(Car carOfInterest) {
+        if (this.carsOfInterest == null) {
+            this.carsOfInterest = new HashSet<>();
+        }
+
+        this.carsOfInterest.add(carOfInterest);
     }
 }

@@ -17,11 +17,15 @@ public class Car {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "manufacturer")
+    @Column(name = "manufacturer", nullable = false)
     private String manufacturer;
 
-    @Column(name = "model")
+    @Column(name = "model", nullable = false)
     private String model;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private CarCategory category;
 
     @PastOrPresent
     @Column(name = "manufacturing_date")
@@ -29,10 +33,6 @@ public class Car {
 
     @ManyToMany(mappedBy = "carsOfInterest")
     private Set<Lead> leads;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private CarCategory category;
 
     public Long getId() {
         return id;
@@ -68,5 +68,9 @@ public class Car {
 
     public void setCategory(CarCategory category) {
         this.category = category;
+    }
+
+    public Set<Lead> getLeads() {
+        return leads;
     }
 }
