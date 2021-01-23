@@ -1,6 +1,7 @@
 package com.markokramar.emilfrey.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,7 +10,8 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "Leads.findAll", query = "SELECT ld FROM Lead ld")
 })
-public class Lead {
+public class Lead implements Serializable {
+    private static final long serialVersionUID = -6951163276266605171L;
 
     @Id
     @Column(name = "id")
@@ -64,5 +66,15 @@ public class Lead {
         }
 
         this.carsOfInterest.add(carOfInterest);
+    }
+
+    @Override
+    public String toString() {
+        return "Lead{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", carsOfInterest=" + carsOfInterest +
+                '}';
     }
 }

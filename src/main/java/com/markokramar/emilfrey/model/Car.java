@@ -2,6 +2,7 @@ package com.markokramar.emilfrey.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -10,7 +11,8 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "Cars.findAll", query = "SELECT c FROM Car c")
 })
-public class Car {
+public class Car implements Serializable {
+    private static final long serialVersionUID = -1677456857809574882L;
 
     @Id
     @Column(name = "id")
@@ -72,5 +74,17 @@ public class Car {
 
     public Set<Lead> getLeads() {
         return leads;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "id=" + id +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", category=" + category +
+                ", manufacturingDate=" + manufacturingDate +
+                ", leads=" + leads +
+                '}';
     }
 }

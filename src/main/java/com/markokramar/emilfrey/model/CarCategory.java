@@ -1,14 +1,16 @@
 package com.markokramar.emilfrey.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "car_categories")
 @NamedQueries({
-    @NamedQuery(name = "CarCategories.findAll", query = "SELECT cc FROM Carcategory cc")
+    @NamedQuery(name = "CarCategories.findAll", query = "SELECT cc FROM CarCategory cc")
 })
-public class CarCategory {
+public class CarCategory implements Serializable {
+    private static final long serialVersionUID = 3480637050478827631L;
 
     @Id
     @Column(name = "id")
@@ -35,5 +37,14 @@ public class CarCategory {
 
     public Set<Car> getCars() {
         return cars;
+    }
+
+    @Override
+    public String toString() {
+        return "CarCategory{" +
+                "id=" + id +
+                ", categoryName='" + categoryName + '\'' +
+                ", cars=" + cars +
+                '}';
     }
 }

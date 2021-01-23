@@ -25,7 +25,7 @@ public class LeadsResource {
 
     @GET
     @Path("{id}")
-    public Response getTodo(@PathParam("id") Long id) {
+    public Response getLead(@PathParam("id") Long id) {
         Lead lead = leadsDao.findById(id);
         return Response.ok(lead).build();
     }
