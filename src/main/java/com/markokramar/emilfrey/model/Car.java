@@ -7,6 +7,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "cars")
+@NamedQueries({
+    @NamedQuery(name = "Cars.findAll", query = "SELECT c FROM Car c")
+})
 public class Car {
 
     @Id

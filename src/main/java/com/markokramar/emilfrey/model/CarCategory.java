@@ -5,6 +5,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "car_categories")
+@NamedQueries({
+    @NamedQuery(name = "CarCategories.findAll", query = "SELECT cc FROM Carcategory cc")
+})
 public class CarCategory {
 
     @Id

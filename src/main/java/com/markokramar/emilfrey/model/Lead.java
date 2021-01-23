@@ -5,6 +5,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "leads")
+@NamedQueries({
+        @NamedQuery(name = "Leads.findAll", query = "SELECT ld FROM Lead ld")
+})
 public class Lead {
 
     @Id
