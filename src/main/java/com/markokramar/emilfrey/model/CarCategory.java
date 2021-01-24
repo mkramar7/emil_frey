@@ -2,7 +2,6 @@ package com.markokramar.emilfrey.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name = "car_categories")
@@ -17,11 +16,8 @@ public class CarCategory implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "category_name")
+    @Column(name = "category_name", nullable = false)
     private String categoryName;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-    private Set<Car> cars;
 
     public Long getId() {
         return id;
@@ -35,16 +31,11 @@ public class CarCategory implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public Set<Car> getCars() {
-        return cars;
-    }
-
     @Override
     public String toString() {
         return "CarCategory{" +
                 "id=" + id +
                 ", categoryName='" + categoryName + '\'' +
-                ", cars=" + cars +
                 '}';
     }
 }

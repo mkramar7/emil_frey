@@ -7,6 +7,11 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="jboss-releases-repository" />
+      <option name="name" value="JBOSS Releases repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/releases/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss-public-repository-group" />
       <option name="name" value="JBoss Public Repository Group" />
       <option name="url" value="https://repository.jboss.org/nexus/content/groups/public/" />

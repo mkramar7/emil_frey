@@ -1,7 +1,7 @@
 package com.markokramar.emilfrey.resource;
 
-import com.markokramar.emilfrey.service.CarCategoriesService;
 import com.markokramar.emilfrey.model.CarCategory;
+import com.markokramar.emilfrey.service.CarCategoriesService;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
