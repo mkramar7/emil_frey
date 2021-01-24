@@ -1,6 +1,6 @@
 package com.markokramar.emilfrey.resource;
 
-import com.markokramar.emilfrey.dao.CarCategoriesDao;
+import com.markokramar.emilfrey.service.CarCategoriesService;
 import com.markokramar.emilfrey.model.CarCategory;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,40 +16,40 @@ import javax.ws.rs.core.Response;
 public class CarCategoriesResource {
 
     @Inject
-    private CarCategoriesDao carCategoriesDao;
+    private CarCategoriesService carCategoriesService;
 
     @GET
     public Response getAll() {
-        return Response.ok(carCategoriesDao.getAll()).build();
+        return Response.ok(carCategoriesService.getAll()).build();
     }
 
     @GET
     @Path("{id}")
     public Response getCarCategory(@PathParam("id") Long id) {
-        CarCategory carCategory = carCategoriesDao.findById(id);
+        CarCategory carCategory = carCategoriesService.findById(id);
         return Response.ok(carCategory).build();
     }
 
     @PUT
     @Path("{id}")
     public Response update(@PathParam("id") Long id, CarCategory carCategory) {
-        CarCategory carCategoryToUpdate = carCategoriesDao.findById(id);
+        CarCategory carCategoryToUpdate = carCategoriesService.findById(id);
         carCategoryToUpdate.setCategoryName(carCategory.getCategoryName());
-        carCategoriesDao.update(carCategoryToUpdate);
+        carCategoriesService.update(carCategoryToUpdate);
         return Response.ok().build();
     }
 
     @POST
     public Response create(CarCategory carCategory) {
-        carCategoriesDao.create(carCategory);
+        carCategoriesService.create(carCategory);
         return Response.ok().build();
     }
 
     @DELETE
     @Path("{id}")
     public Response delete(@PathParam("id") Long id) {
-        CarCategory carCategoryToDelete = carCategoriesDao.findById(id);
-        carCategoriesDao.delete(carCategoryToDelete);
+        CarCategory carCategoryToDelete = carCategoriesService.findById(id);
+        carCategoriesService.delete(carCategoryToDelete);
         return Response.ok().build();
     }
 }

@@ -20,6 +20,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="default" />
           <factory-entry name="emilfrey" value="857fb72e-82d1-4380-a00f-9a3b9b5efbe6" />
         </datasource-mapping>
         <naming-strategy-map />

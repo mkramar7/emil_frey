@@ -1,4 +1,4 @@
-package com.markokramar.emilfrey.dao;
+package com.markokramar.emilfrey.service;
 
 import com.markokramar.emilfrey.model.CarCategory;
 
@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Stateless
-public class CarCategoriesDao {
+public class CarCategoriesService {
 
     @PersistenceContext
     private EntityManager em;

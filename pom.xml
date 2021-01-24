@@ -10,6 +10,14 @@
     <name>emilfrey</name>
     <packaging>war</packaging>
 
+    <repositories>
+        <repository>
+            <id>jboss-releases-repository</id>
+            <name>JBOSS Releases repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+        </repository>
+    </repositories>
+
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -46,13 +54,31 @@
             <version>8.0.23</version>
         </dependency>
     </dependencies>
-
     <build>
+        <finalName>emilfrey</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-jar-maven-plugin</artifactId>
+                <version>3.0.2.Final</version>
+                <configuration>
+                    <feature-pack-location>wildfly@maven(org.jboss.universe:community-universe)</feature-pack-location>
+                    <layers>
+                        <layer>jaxrs-server</layer>
+                    </layers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

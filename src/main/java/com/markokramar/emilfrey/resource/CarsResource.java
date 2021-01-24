@@ -1,6 +1,6 @@
 package com.markokramar.emilfrey.resource;
 
-import com.markokramar.emilfrey.dao.CarsDao;
+import com.markokramar.emilfrey.service.CarsService;
 import com.markokramar.emilfrey.model.Car;
 
 import javax.enterprise.context.RequestScoped;
@@ -16,43 +16,43 @@ import javax.ws.rs.core.Response;
 public class CarsResource {
 
     @Inject
-    private CarsDao carsDao;
+    private CarsService carsService;
 
     @GET
     public Response getAll() {
-        return Response.ok(carsDao.getAll()).build();
+        return Response.ok(carsService.getAll()).build();
     }
 
     @GET
     @Path("{id}")
     public Response getCar(@PathParam("id") Long id) {
-        Car car = carsDao.findById(id);
+        Car car = carsService.findById(id);
         return Response.ok(car).build();
     }
 
     @PUT
     @Path("{id}")
     public Response update(@PathParam("id") Long id, Car car) {
-        Car carToUpdate = carsDao.findById(id);
+        Car carToUpdate = carsService.findById(id);
         carToUpdate.setManufacturer(car.getManufacturer());
         carToUpdate.setModel(car.getModel());
         carToUpdate.setCategory(car.getCategory());
         carToUpdate.setManufacturingDate(car.getManufacturingDate());
-        carsDao.update(carToUpdate);
+        carsService.update(carToUpdate);
         return Response.ok().build();
     }
 
     @POST
     public Response create(Car car) {
-        carsDao.create(car);
+        carsService.create(car);
         return Response.ok().build();
     }
 
     @DELETE
     @Path("{id}")
     public Response delete(@PathParam("id") Long id) {
-        Car carToDelete = carsDao.findById(id);
-        carsDao.delete(carToDelete);
+        Car carToDelete = carsService.findById(id);
+        carsService.delete(carToDelete);
         return Response.ok().build();
     }
 }
