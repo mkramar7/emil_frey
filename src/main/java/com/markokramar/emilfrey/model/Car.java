@@ -25,7 +25,7 @@ public class Car implements Serializable {
     @Column(name = "model", nullable = false)
     private String model;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", nullable = false)
     private CarCategory category;
 
@@ -33,7 +33,7 @@ public class Car implements Serializable {
     @Column(name = "manufacturing_date")
     private LocalDate manufacturingDate;
 
-    @ManyToMany(mappedBy = "carsOfInterest")
+    @ManyToMany(mappedBy = "carsOfInterest", fetch = FetchType.EAGER)
     private Set<Lead> leads;
 
     public Long getId() {
