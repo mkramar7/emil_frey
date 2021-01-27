@@ -3,7 +3,7 @@ let EmilFreyUtil = function() {};
 EmilFreyUtil.loadLeadsTableWithData = function() {
     let tableBody = EmilFreyUtil.clearAndGetTableBody("leads-table");
 
-    EmilFreyRest.fetchFromUrl("api/leads", function(leads) {
+    EmilFreyRest.fetchFromUrl("leads", function(leads) {
         leads.forEach((lead, i) => {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
@@ -11,6 +11,7 @@ EmilFreyUtil.loadLeadsTableWithData = function() {
             EmilFreyUtil.createDataCell(lead.id, rowElem, true);
             EmilFreyUtil.createDataCell(lead.firstName, rowElem);
             EmilFreyUtil.createDataCell(lead.lastName, rowElem);
+            EmilFreyUtil.createDataCell("", rowElem); // todo: cars of interest
             EmilFreyUtil.createActionsCell(rowElem, lead.id);
         });
 
@@ -21,13 +22,13 @@ EmilFreyUtil.loadLeadsTableWithData = function() {
 EmilFreyUtil.loadCarCategoriesTableWithData = function() {
     let tableBody = EmilFreyUtil.clearAndGetTableBody("car-categories-table");
 
-    EmilFreyRest.fetchFromUrl("api/car_categories", function(carCategories) {
+    EmilFreyRest.fetchFromUrl("car_categories", function(carCategories) {
         carCategories.forEach((carCategory, i) => {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
             EmilFreyUtil.createRowNumCell(i+1, rowElem);
             EmilFreyUtil.createDataCell(carCategory.id, rowElem, true);
-            EmilFreyUtil.createDataCell(carCategory.categoryName);
+            EmilFreyUtil.createDataCell(carCategory.categoryName, rowElem);
             EmilFreyUtil.createActionsCell(rowElem, carCategory.id);
         });
 
@@ -38,7 +39,7 @@ EmilFreyUtil.loadCarCategoriesTableWithData = function() {
 EmilFreyUtil.loadCarsTableWithData = function() {
     let tableBody = EmilFreyUtil.clearAndGetTableBody("cars-table");
 
-    EmilFreyRest.fetchFromUrl("api/cars", function(cars) {
+    EmilFreyRest.fetchFromUrl("cars", function(cars) {
         cars.forEach((car, i) => {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
@@ -128,7 +129,7 @@ EmilFreyUtil.showModalDialog = function(dialogId, entityId, fieldId) {
 EmilFreyUtil.onLeadDialogShown = function() {
     var selectedLead = null;
     if ($("#edit-lead-id").val() !== "") {
-        EmilFreyRest.fetchFromUrl("api/leads/" + $("#edit-lead-id").val(), function(lead) {
+        EmilFreyRest.fetchFromUrl("leads/" + $("#edit-lead-id").val(), function(lead) {
             selectedLead = lead;
             fillLeadEditForm();
             EmilFreyUtil.checkFormValidity($("#lead-dialog"));
@@ -172,7 +173,7 @@ EmilFreyUtil.onLeadDialogShown = function() {
 EmilFreyUtil.onCarCategoryDialogShown = function() {
     var selectedCarCategory = null;
     if ($("#edit-car-category-id").val() !== "") {
-        EmilFreyRest.fetchFromUrl("api/car_categories/" + $("#edit-car-category-id").val(), function(carCategory) {
+        EmilFreyRest.fetchFromUrl("car_categories/" + $("#edit-car-category-id").val(), function(carCategory) {
             selectedCarCategory = carCategory;
             fillCarCategoryEditForm();
             EmilFreyUtil.checkFormValidity($("#car-category-dialog"));
@@ -194,7 +195,7 @@ EmilFreyUtil.onCarCategoryDialogShown = function() {
 EmilFreyUtil.onCarDialogShown = function() {
     var selectedCar = null;
     if ($("#edit-car-id").val() !== "") {
-        EmilFreyRest.fetchFromUrl("api/cars/" + $("#edit-car-id").val(), function(car) {
+        EmilFreyRest.fetchFromUrl("cars/" + $("#edit-car-id").val(), function(car) {
             selectedCar = car;
             fillCarEditForm();
             EmilFreyUtil.checkFormValidity($("#car-dialog"));
@@ -251,7 +252,7 @@ EmilFreyUtil.saveLead = function() {
     lead.lastName = $("#edit-lead-last-name").val();
 
     let leadId = $("#edit-lead-id").val();
-    let uri = "api/leads" + (leadId ? "/" + leadId : "");
+    let uri = "leads" + (leadId ? "/" + leadId : "");
     let method = leadId ? "PUT" : "POST";
     EmilFreyRest.saveEntity(uri, lead, method, function(data) {
         $("#lead-dialog").modal("hide");
@@ -269,7 +270,7 @@ EmilFreyUtil.saveCarCategory = function() {
     carCategory.categoryName = $("#edit-car-category-name").val();
 
     let carCategoryId = $("#edit-car-category-id").val();
-    let uri = "api/car_categories" + (carCategoryId ? "/" + carCategoryId : "");
+    let uri = "car_categories" + (carCategoryId ? "/" + carCategoryId : "");
     let method = carCategoryId ? "PUT" : "POST";
     EmilFreyRest.saveEntity(uri, carCategory, method, function(data) {
         $("#car-category-dialog").modal("hide");
@@ -289,7 +290,7 @@ EmilFreyUtil.saveCar = function() {
     car.manufacturingDate = $("#edit-car-manufacturing-date").val();
 
     let carId = $("#edit-car-id").val();
-    let uri = "api/cars" + (carId ? "/" + carId : "");
+    let uri = "cars" + (carId ? "/" + carId : "");
     let method = carId ? "PUT" : "POST";
     EmilFreyRest.saveEntity(uri, car, method, function(data) {
         $("#car-dialog").modal("hide");

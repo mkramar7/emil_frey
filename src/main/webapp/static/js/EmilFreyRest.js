@@ -15,8 +15,7 @@ EmilFreyRest.saveEntity = function(uri, entity, method, successCallback) {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(entity),
-    }).then((response) => response.json())
-        .then((data) => {
+    }).then((data) => {
             successCallback(data);
         })
         .catch((error) => {

@@ -1,7 +1,7 @@
 let allHeadCheckboxes = $("table thead .checkbox-col input[type='checkbox']");
 
 $(function() {
-    /*QuizillaUtil.loadQuestionsTableWithData();
+    EmilFreyUtil.loadLeadsTableWithData();
     handleTabSwitchingBehavior();
     handleCheckboxesBehavior();
     handleNewEntryButtonClicks();
@@ -9,78 +9,77 @@ $(function() {
     handleDialogShownAndHiddenEvents();
     handleDialogSaveEvents();
     handleDeleteEntryActionIconClicks();
-    */
 });
 
 function handleDialogSaveEvents() {
-    $("#question-dialog #btn-save-question").click(QuizillaUtil.saveQuestion);
-    $("#category-dialog #btn-save-category").click(QuizillaUtil.saveCategory);
-    $("#language-dialog #btn-save-language").click(QuizillaUtil.saveLanguage);
+    $("#lead-dialog #btn-save-lead").click(EmilFreyUtil.saveLead);
+    $("#car-category-dialog #btn-save-car-category").click(EmilFreyUtil.saveCarCategory);
+    $("#car-dialog #btn-save-car").click(EmilFreyUtil.saveCar);
 };
 
 function handleDialogShownAndHiddenEvents() {
-    $("#question-dialog").on("shown.bs.modal", QuizillaUtil.onQuestionDialogShown);
-    $("#category-dialog").on("shown.bs.modal", QuizillaUtil.onCategoryDialogShown);
-    $("#language-dialog").on("shown.bs.modal", QuizillaUtil.onLanguageDialogShown);
+    $("#lead-dialog").on("shown.bs.modal", EmilFreyUtil.onLeadDialogShown);
+    $("#car-category-dialog").on("shown.bs.modal", EmilFreyUtil.onCarCategoryDialogShown);
+    $("#car-dialog").on("shown.bs.modal", EmilFreyUtil.onCarDialogShown);
 
-    $("#question-dialog").on("hidden.bs.modal", QuizillaUtil.onQuestionDialogHidden);
-    $("#category-dialog").on("hidden.bs.modal", QuizillaUtil.onCategoryDialogHidden);
-    $("#language-dialog").on("hidden.bs.modal", QuizillaUtil.onLanguageDialogHidden);
+    $("#lead-dialog").on("hidden.bs.modal", EmilFreyUtil.onLeadDialogHidden);
+    $("#car-category-dialog").on("hidden.bs.modal", EmilFreyUtil.onCarCategoryDialogHidden);
+    $("#car-dialog").on("hidden.bs.modal", EmilFreyUtil.onCarDialogHidden);
 };
 
 function handleNewEntryButtonClicks() {
     $(".btn-add-new-entry").click(function() {
-        if ($(this).hasClass("btn-add-new-question")) {
-            QuizillaUtil.showModalDialog("question-dialog");
-        } else if ($(this).hasClass("btn-add-new-category")) {
-            QuizillaUtil.showModalDialog("category-dialog");
-        } else if ($(this).hasClass("btn-add-new-language")) {
-            QuizillaUtil.showModalDialog("language-dialog");
+        if ($(this).hasClass("btn-add-new-lead")) {
+            EmilFreyUtil.showModalDialog("lead-dialog");
+        } else if ($(this).hasClass("btn-add-new-car-category")) {
+            EmilFreyUtil.showModalDialog("car-category-dialog");
+        } else if ($(this).hasClass("btn-add-new-car")) {
+            EmilFreyUtil.showModalDialog("car-dialog");
         }
     });
 };
 
 function handleEditEntryActionIconClicks() {
-    $("#questions-table").on("click", ".edit-action", function() {
-        QuizillaUtil.showModalDialog("question-dialog", $(this).data("id-to-edit"), "edit-question-id");
+    $("#leads-table").on("click", ".edit-action", function() {
+        EmilFreyUtil.showModalDialog("lead-dialog", $(this).data("id-to-edit"), "edit-lead-id");
     });
 
-    $("#categories-table").on("click", ".edit-action", function() {
-        QuizillaUtil.showModalDialog("category-dialog", $(this).data("id-to-edit"), "edit-category-id");
+    $("#car-categories-table").on("click", ".edit-action", function() {
+        EmilFreyUtil.showModalDialog("car-category-dialog", $(this).data("id-to-edit"), "edit-car-category-id");
     });
 
-    $("#languages-table").on("click", ".edit-action", function() {
-        QuizillaUtil.showModalDialog("language-dialog", $(this).data("id-to-edit"), "edit-language-id");
+    $("#cars-table").on("click", ".edit-action", function() {
+        EmilFreyUtil.showModalDialog("car-dialog", $(this).data("id-to-edit"), "edit-car-id");
     });
 };
 
 function handleDeleteEntryActionIconClicks() {
-    $("#questions-table").on("click", ".delete-action", function() {
+    $("#leads-table").on("click", ".delete-action", function() {
         let idToDelete = $(this).data("id-to-delete");
-        if (confirm("Are you sure that you want to delete selected question?")) {
-           QuizillaRest.deleteEntity("api/questions", idToDelete, function() {
-               QuizillaUtil.loadQuestionsTableWithData();
-               QuizillaUtil.showSuccessMessage("Question deleted successfully!");
+        if (confirm("Are you sure that you want to delete selected lead?")) {
+           EmilFreyRest.deleteEntity("leads", idToDelete, function() {
+               EmilFreyUtil.loadLeadsTableWithData();
+               EmilFreyUtil.showSuccessMessage("Lead deleted successfully!");
            });
         }
     });
 
-    $("#categories-table").on("click", ".delete-action", function() {
+    $("#car-categories-table").on("click", ".delete-action", function() {
         let idToDelete = $(this).data("id-to-delete");
-        if (confirm("Are you sure that you want to delete selected question?")) {
-            QuizillaRest.deleteEntity("api/categories", idToDelete, function() {
-                QuizillaUtil.loadCategoriesTableWithData();
-                QuizillaUtil.showSuccessMessage("Category deleted successfully!");
+        if (confirm("Are you sure that you want to delete selected car category?")) {
+            EmilFreyRest.deleteEntity("car_categories", idToDelete, function() {
+                EmilFreyUtil.loadCarCategoriesTableWithData();
+                EmilFreyUtil.showSuccessMessage("Car category deleted successfully!");
             });
         }
     });
 
-    $("#languages-table").on("click", ".delete-action", function() {
+    $("#cars-table").on("click", ".delete-action", function() {
         let idToDelete = $(this).data("id-to-delete");
-        if (confirm("Are you sure that you want to delete selected question?")) {
-            QuizillaRest.deleteEntity("api/languages", idToDelete, function() {
-                QuizillaUtil.loadLanguagesTableWithData();
-                QuizillaUtil.showSuccessMessage("Language deleted successfully!");
+        if (confirm("Are you sure that you want to delete selected car?")) {
+            EmilFreyRest.deleteEntity("cars", idToDelete, function() {
+                EmilFreyUtil.loadCarsTableWithData();
+                EmilFreyUtil.showSuccessMessage("Car deleted successfully!");
             });
         }
     });
@@ -91,12 +90,12 @@ function handleTabSwitchingBehavior() {
         allHeadCheckboxes.prop("checked", false);
 
         let tab = $(e.target).data("tab");
-        if (tab === "questions") {
-            QuizillaUtil.loadQuestionsTableWithData();
-        } else if (tab === "categories") {
-            QuizillaUtil.loadCategoriesTableWithData();
-        } else if (tab === "languages") {
-            QuizillaUtil.loadLanguagesTableWithData();
+        if (tab === "leads") {
+            EmilFreyUtil.loadLeadsTableWithData();
+        } else if (tab === "car-categories") {
+            EmilFreyUtil.loadCarCategoriesTableWithData();
+        } else if (tab === "cars") {
+            EmilFreyUtil.loadCarsTableWithData();
         }
     })
 };
