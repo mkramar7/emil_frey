@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Emil Frey | Leads Administration</title>
+
+        <!-- FontAwesome 5.12.1 -->
+        <link rel="stylesheet" type="text/css" href="../../static/vendor/all.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../../static/vendor/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../../static/css/admin.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+                <img src="../../static/images/emil_frey_logo.svg" height="50" alt="Emil Frey logo">
+            </a>
+            <h5 style="margin-top: 10px">Leads Administration Console</h5>
+        </nav>
+        <div class="container-fluid">
+            <br>
+            <div class="row">
+                <div class="col-xl-12">
+                    <ul class="nav nav-tabs" id="tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-tab="leads" id="leads-tab" data-toggle="tab" href="#leads" role="tab" aria-controls="leads" aria-selected="true">Leads</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-tab="cars" id="cars-tab" data-toggle="tab" href="#cars" role="tab" aria-controls="cars" aria-selected="false">Cars</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-tab="car-categories" id="car-categories-tab" data-toggle="tab" href="#car-categories" role="tab" aria-controls="car-categories" aria-selected="false">Car categories</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="tabsContent">
+                        <div class="tab-pane fade show active" id="leads" role="tabpanel" aria-labelledby="leads-tab">
+                            <br>
+                            <div class="container-fluid buttons-container">
+                                <div class="row">
+                                    <div class="col-xl-9">
+                                        <button type="button" class="btn btn-primary btn-add-new-entry btn-add-new-lead">
+                                            <i class="fas fa-plus-circle"></i>
+                                            Add new
+                                        </button>
+                                        <button id="delete-lead" type="button" class="btn btn-danger btn-delete-entry btn-delete-lead" disabled>
+                                            <i class="fas fa-trash"></i>
+                                            Delete selected
+                                        </button>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <div class="input-group mb-3">
+                                            <input id="search-leads" type="text" class="form-control" placeholder="Search leads..." aria-label="Search leads">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid leads-container">
+                                <table class="table table-striped table-hover table-bordered" id="leads-table">
+                                    <thead>
+                                        <th scope="col" class="checkbox-col">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="form-check-input" type="checkbox">
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="row-number-header">#</th>
+                                        <th scope="col" class="id-header">ID</th>
+                                        <th scope="col">First name</th>
+                                        <th scope="col">Last name</th>
+                                        <th scope="col">Cars of interest</th>
+                                        <th scope="col" class="actions-header">Actions</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="cars" role="tabpanel" aria-labelledby="cars-tab">
+                            <br>
+                            <div class="container-fluid buttons-container">
+                                <div class="row">
+                                    <div class="col-xl-9">
+                                        <button id="add-new-car" type="button" class="btn btn-primary btn-add-new-entry btn-add-new-car">
+                                            <i class="fas fa-plus-circle"></i>
+                                            Add new
+                                        </button>
+                                        <button id="delete-car" type="button" class="btn btn-danger btn-delete-entry btn-delete-car" disabled>
+                                            <i class="fas fa-trash"></i>
+                                            Delete selected
+                                        </button>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <div class="input-group mb-3">
+                                            <input id="search-cars" type="text" class="form-control" placeholder="Search cars..." aria-label="Seach cars">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid cars-container">
+                                <table class="table table-striped table-hover table-bordered" id="cars-table">
+                                    <thead>
+                                        <th scope="col" class="checkbox-col">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="form-check-input" type="checkbox">
+                                            </div>
+                                        </th>
+                                        <th scope="col" class="row-number-header">#</th>
+                                        <th scope="col" class="id-header">ID</th>
+                                        <th scope="col">Manufacturer</th>
+                                        <th scope="col">Model</th>
+                                        <th scope="col">Manufacturing date</th>
+                                        <th scope="col" class="actions-header">Actions</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="car-categories" role="tabpanel" aria-labelledby="car-categories-tab">
+                            <br>
+                            <div class="container-fluid buttons-container">
+                                <div class="row">
+                                    <div class="col-xl-9">
+                                        <button type="button" class="btn btn-primary btn-add-new-entry btn-add-new-car-category">
+                                            <i class="fas fa-plus-circle"></i>
+                                            Add new
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-delete-entry btn-delete-car-category" disabled>
+                                            <i class="fas fa-trash"></i>
+                                            Delete selected
+                                        </button>
+                                    </div>
+                                    <div class="col-xl-3">
+                                        <div class="input-group mb-3">
+                                            <input id="search-car-categories" type="text" class="form-control" placeholder="Search car categories..." aria-label="Search car categories">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid car-categories-container">
+                                <table class="table table-striped table-hover table-bordered" id="car-categories-table">
+                                    <thead>
+                                    <th scope="col" class="checkbox-col">
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="form-check-input" type="checkbox">
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="row-number-header">#</th>
+                                    <th scope="col" class="id-header">ID</th>
+                                    <th scope="col">Category name</th>
+                                    <th scope="col" class="actions-header">Actions</th>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- dialogs -->
+        <div class="modal fade" id="lead-dialog" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New lead</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group entity-id-container">
+                                <label for="edit-lead-id" class="col-form-label">Lead ID:</label>
+                                <input type="text" class="form-control" id="edit-lead-id">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-lead-first-name" class="col-form-label">First name:</label>
+                                <textarea class="form-control" id="edit-lead-first-name" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter first name for lead.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-lead-last-name" class="col-form-label">Last name:</label>
+                                <textarea class="form-control" id="edit-lead-last-name" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please enter last name for lead.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="edit-lead-cars-of-interest">Cars of interest</label>
+                                    </div>
+                                    <select class="custom-select" id="edit-lead-cars-of-interest">
+
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btn-save-lead">Save lead</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="car-dialog" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New car</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group entity-id-container">
+                                <label for="edit-car-id" class="col-form-label">Car ID:</label>
+                                <input type="text" class="form-control" id="edit-car-id">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-car-manufacturer" class="col-form-label">Manufacturer:</label>
+                                <input type="text" class="form-control" id="edit-car-manufacturer" required>
+                                <div class="invalid-feedback">
+                                    Please enter car manufacturer.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-car-model" class="col-form-label">Model:</label>
+                                <input type="text" class="form-control" id="edit-car-model" required>
+                                <div class="invalid-feedback">
+                                    Please enter car model.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-car-manufacturing-date" class="col-form-label">Manufacturing date:</label>
+                                <input type="text" class="form-control" id="edit-car-manufacturing-date" required>
+                                <div class="invalid-feedback">
+                                    Please enter car manufacturing date.
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btn-save-car">Save car</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="car-category-dialog" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">New category</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group entity-id-container">
+                                <label for="edit-car-category-id" class="col-form-label">Category ID:</label>
+                                <input type="text" class="form-control" id="edit-car-category-id">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-car-category-name" class="col-form-label">Category name:</label>
+                                <input type="text" class="form-control" id="edit-car-category-name" required>
+                                <div class="invalid-feedback">
+                                    Please enter car category name.
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="btn-save-category">Save car category</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- external vendor resources -->
+        <script src="../../static/vendor/jquery-3.4.1.min.js"></script>
+        <script src="../../static/vendor/bootstrap.bundle.min.js"></script>
+        <script src="../../static/js/EmilFreyRest.js"></script>
+        <script src="../../static/js/EmilFreyUtil.js"></script>
+        <script src="../../static/js/admin.js?version=2"></script>
+    </body>
+</html>
