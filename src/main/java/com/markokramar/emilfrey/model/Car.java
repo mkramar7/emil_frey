@@ -25,7 +25,7 @@ public class Car implements Serializable {
     @Column(name = "model", nullable = false)
     private String model;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", nullable = false)
     private CarCategory category;
 
@@ -35,6 +35,10 @@ public class Car implements Serializable {
 
     @ManyToMany(mappedBy = "carsOfInterest", fetch = FetchType.EAGER)
     private Set<Lead> leads;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

@@ -16,8 +16,12 @@ public class CarCategory implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "category_name", nullable = false)
+    @Column(name = "category_name", nullable = false, unique = true)
     private String categoryName;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;

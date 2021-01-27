@@ -24,13 +24,17 @@ public class Lead implements Serializable {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "lead_cars_of_interest",
             joinColumns = { @JoinColumn(name = "lead_id") },
             inverseJoinColumns = { @JoinColumn(name = "car_id") }
     )
     private Set<Car> carsOfInterest;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId() {
         return id;
