@@ -258,6 +258,10 @@ EmilFreyUtil.saveLead = function() {
         $("#lead-dialog").modal("hide");
         EmilFreyUtil.loadLeadsTableWithData();
         EmilFreyUtil.showSuccessMessage("Lead saved successfully!");
+    }, function() {
+        $("#lead-dialog").modal("hide");
+        EmilFreyUtil.loadLeadsTableWithData();
+        EmilFreyUtil.showErrorMessage("There was an error while trying to save lead. Please try again or contact administrator.");
     });
 };
 
@@ -276,6 +280,10 @@ EmilFreyUtil.saveCarCategory = function() {
         $("#car-category-dialog").modal("hide");
         EmilFreyUtil.loadCarCategoriesTableWithData();
         EmilFreyUtil.showSuccessMessage("Car category saved successfully!");
+    }, function() {
+        $("#car-category-dialog").modal("hide");
+        EmilFreyUtil.loadCarCategoriesTableWithData();
+        EmilFreyUtil.showErrorMessage("There was an error while trying to save car category. Please try again or contact administrator.");
     });
 };
 
@@ -296,6 +304,10 @@ EmilFreyUtil.saveCar = function() {
         $("#car-dialog").modal("hide");
         EmilFreyUtil.loadCarsTableWithData();
         EmilFreyUtil.showSuccessMessage("Car saved successfully!");
+    }, function() {
+        $("#car-dialog").modal("hide");
+        EmilFreyUtil.loadCarsTableWithData();
+        EmilFreyUtil.showErrorMessage("There was an error while trying to save car. Please try again or contact administrator.");
     });
 };
 
@@ -304,7 +316,7 @@ EmilFreyUtil.showSuccessMessage = function(message) {
 };
 
 EmilFreyUtil.showErrorMessage = function(message) {
-    EmilFreyUtil.showMessage(message, "error");
+    EmilFreyUtil.showMessage(message, "danger");
 };
 
 EmilFreyUtil.showMessage = function(message, prefix) {
@@ -317,7 +329,7 @@ EmilFreyUtil.showMessage = function(message, prefix) {
         alertMessage.fadeOut("slow", function() {
             $(this).remove();
         });
-    }, 5000);
+    }, 100000);
 };
 
 EmilFreyUtil.checkFormValidity = function(modalDialog) {

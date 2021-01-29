@@ -42,7 +42,7 @@ public class CarCategoriesResource {
     @POST
     public Response create(CarCategory carCategory) {
         carCategoriesService.create(carCategory);
-        return Response.ok().build();
+        return Response.ok(carCategory).build();
     }
 
     @DELETE

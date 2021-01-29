@@ -28,7 +28,7 @@ label[for='edit-lead-category'] {
 }
 
 .success-message,
-.error-message {
+.danger-message {
     position: absolute;
     bottom: 10px;
     right: 10px;

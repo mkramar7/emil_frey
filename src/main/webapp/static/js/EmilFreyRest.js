@@ -8,19 +8,23 @@ EmilFreyRest.fetchFromUrl = function(url, successCallback) {
         });
 };
 
-EmilFreyRest.saveEntity = function(uri, entity, method, successCallback) {
+EmilFreyRest.saveEntity = function(uri, entity, method, successCallback, failureCallback) {
     fetch(uri, {
         method: method,
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(entity),
-    }).then((data) => {
+    }).then(data => {
+        if (data.status == 500) {
+            failureCallback();
+        } else {
             successCallback(data);
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+    });
 };
 
 EmilFreyRest.deleteEntity = function(endpointUri, id, successCallback) {
