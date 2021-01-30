@@ -109,6 +109,7 @@
                                         <th scope="col">Manufacturer</th>
                                         <th scope="col">Model</th>
                                         <th scope="col">Manufacturing date</th>
+                                        <th scope="col">Category name</th>
                                         <th scope="col" class="actions-header">Actions</th>
                                     </thead>
                                     <tbody>
@@ -246,6 +247,19 @@
                                 <input type="text" class="form-control" id="edit-car-manufacturing-date" required>
                                 <div class="invalid-feedback">
                                     Please enter car manufacturing date.
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="edit-car-category">Category:</label>
+                                    </div>
+                                    <select class="custom-select" id="edit-car-category" required>
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose car category or create new in <i>Categories</i> section if there is none.
+                                    </div>
                                 </div>
                             </div>
                         </form>

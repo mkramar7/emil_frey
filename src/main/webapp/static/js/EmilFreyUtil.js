@@ -45,8 +45,10 @@ EmilFreyUtil.loadCarsTableWithData = function() {
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
             EmilFreyUtil.createRowNumCell(i+1, rowElem);
             EmilFreyUtil.createDataCell(car.id, rowElem, true);
-            EmilFreyUtil.createDataCell(car.code, rowElem);
-            EmilFreyUtil.createDataCell(car.name, rowElem);
+            EmilFreyUtil.createDataCell(car.manufacturer, rowElem);
+            EmilFreyUtil.createDataCell(car.model, rowElem);
+            EmilFreyUtil.createDataCell(car.manufacturingDate, rowElem);
+            EmilFreyUtil.createDataCell(car.category.categoryName, rowElem);
             EmilFreyUtil.createActionsCell(rowElem, car.id);
         });
 
@@ -185,7 +187,7 @@ EmilFreyUtil.onCarCategoryDialogShown = function() {
 
     function fillCarCategoryEditForm() {
         if (selectedCarCategory) {
-            $("#edit-car-category-name").val(selectedCarCategory.name);
+            $("#edit-car-category-name").val(selectedCarCategory.categoryName);
         }
 
         $("#edit-car-category-name").focus();
@@ -211,6 +213,19 @@ EmilFreyUtil.onCarDialogShown = function() {
             $("#edit-car-model").val(selectedCar.model);
             $("#edit-car-manufacturing-date").val(selectedCar.manufacturingDate);
         }
+
+        let carCategorySelect = $("#edit-car-category");
+        EmilFreyRest.fetchFromUrl("car_categories", function(carCategories) {
+            carCategories.forEach(carCategory => {
+                let carCategoryOption = $(document.createElement("option")).appendTo(carCategorySelect);
+                carCategoryOption.attr("value", carCategory.id);
+                carCategoryOption.text(carCategory.categoryName);
+
+                if (selectedCar && selectedCar.category.id == carCategory.id) {
+                    carCategoryOption.prop("selected", true);
+                }
+            });
+        });
 
         $("#edit-car-manufacturer").focus();
     }
@@ -239,6 +254,7 @@ EmilFreyUtil.onCarDialogHidden = function() {
     $("#edit-car-manufacturer").val("");
     $("#edit-car-model").val("");
     $("#edit-car-manufacturing-date").val("");
+    $("#edit-car-category").html("");
 };
 
 // Save button click events
@@ -297,6 +313,10 @@ EmilFreyUtil.saveCar = function() {
     car.model = $("#edit-car-model").val();
     car.manufacturingDate = $("#edit-car-manufacturing-date").val();
 
+    car.category = {};
+    car.category.id = $("#edit-car-category").val();
+    car.category.categoryName = $("#edit-car-category option:selected").text();
+
     let carId = $("#edit-car-id").val();
     let uri = "cars" + (carId ? "/" + carId : "");
     let method = carId ? "PUT" : "POST";
@@ -329,7 +349,7 @@ EmilFreyUtil.showMessage = function(message, prefix) {
         alertMessage.fadeOut("slow", function() {
             $(this).remove();
         });
-    }, 100000);
+    }, 5000);
 };
 
 EmilFreyUtil.checkFormValidity = function(modalDialog) {
