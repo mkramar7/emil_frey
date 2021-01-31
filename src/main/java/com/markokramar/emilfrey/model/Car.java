@@ -1,5 +1,11 @@
 package com.markokramar.emilfrey.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import javax.persistence.*;
 import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
@@ -25,14 +31,17 @@ public class Car implements Serializable {
     @Column(name = "model", nullable = false)
     private String model;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private CarCategory category;
 
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @PastOrPresent
     @Column(name = "manufacturing_date")
     private LocalDate manufacturingDate;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "carsOfInterest", fetch = FetchType.EAGER)
     private Set<Lead> leads;
 
@@ -74,6 +83,10 @@ public class Car implements Serializable {
 
     public void setCategory(CarCategory category) {
         this.category = category;
+    }
+
+    public void setLeads(Set<Lead> leads) {
+        this.leads = leads;
     }
 
     public Set<Lead> getLeads() {

@@ -64,14 +64,6 @@ public class Lead implements Serializable {
         this.carsOfInterest = carsOfInterest;
     }
 
-    public void addCarOfInterest(Car carOfInterest) {
-        if (this.carsOfInterest == null) {
-            this.carsOfInterest = new HashSet<>();
-        }
-
-        this.carsOfInterest.add(carOfInterest);
-    }
-
     @Override
     public String toString() {
         return "Lead{" +

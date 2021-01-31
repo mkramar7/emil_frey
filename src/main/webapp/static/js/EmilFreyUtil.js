@@ -11,7 +11,7 @@ EmilFreyUtil.loadLeadsTableWithData = function() {
             EmilFreyUtil.createDataCell(lead.id, rowElem, true);
             EmilFreyUtil.createDataCell(lead.firstName, rowElem);
             EmilFreyUtil.createDataCell(lead.lastName, rowElem);
-            EmilFreyUtil.createDataCell("", rowElem); // todo: cars of interest
+            EmilFreyUtil.createListCell(lead.carsOfInterest.map(carOfInterest => carOfInterest.manufacturer + " " + carOfInterest.model), rowElem);
             EmilFreyUtil.createActionsCell(rowElem, lead.id);
         });
 
@@ -76,12 +76,29 @@ EmilFreyUtil.createRowNumCell = function(index, parentElem) {
 };
 
 EmilFreyUtil.createDataCell = function(value, parentElem, hidden) {
-    let idCell = $(document.createElement("td")).appendTo(parentElem);
-    idCell.text(value);
+    let cell = $(document.createElement("td")).appendTo(parentElem);
+    cell.text(value);
     if (hidden) {
-        idCell.css("display", "none");
+        cell.css("display", "none");
     }
-    return idCell;
+    return cell;
+};
+
+EmilFreyUtil.createListCell = function(listItems, parentElem) {
+    if (!listItems || listItems.length == 0) {
+        return;
+    }
+
+    let cell = $(document.createElement("td")).appendTo(parentElem);
+    let listElement = $(document.createElement("ul")).appendTo(cell);
+    listElement.css({
+        "margin-bottom": 0,
+        "padding-inline-start" : "20px"
+    });
+    listItems.forEach(listItem => {
+        let listItemElement = $(document.createElement("li")).appendTo(listElement);
+        listItemElement.text(listItem);
+    });
 };
 
 EmilFreyUtil.createActionsCell = function(parentElem, id) {
@@ -251,6 +268,20 @@ EmilFreyUtil.saveLead = function() {
     let lead = {};
     lead.firstName = $("#edit-lead-first-name").val();
     lead.lastName = $("#edit-lead-last-name").val();
+    lead.carsOfInterest = [];
+    $("#edit-lead-cars-of-interest-list").find(".badge-lead-car-of-interest").each(function() {
+        let carOfInterest = {};
+        carOfInterest.id = $(this).data("id");
+        carOfInterest.manufacturer = $(this).data("manufacturer");
+        carOfInterest.model = $(this).data("model");
+        carOfInterest.manufacturingDate = $(this).data("manufacturingDate");
+
+        carOfInterest.category = {};
+        carOfInterest.category.id = $(this).data("car-category-id");
+        carOfInterest.category.categoryName = $(this).data("car-category-name");
+
+        lead.carsOfInterest.push(carOfInterest);
+    });
 
     let leadId = $("#edit-lead-id").val();
     let uri = "leads" + (leadId ? "/" + leadId : "");
@@ -346,6 +377,9 @@ EmilFreyUtil.handleLeadCarsOfInterestEvents = function() {
             carOfInterestBadge.data("manufacturer", car.manufacturer);
             carOfInterestBadge.data("model", car.mode);
             carOfInterestBadge.data("manufacturing-date", car.manufacturingDate);
+
+            carOfInterestBadge.data("car-category-id", car.category.id);
+            carOfInterestBadge.data("car-category-name", car.category.categoryName);
 
             let badgeCloseButton = $(document.createElement("span")).appendTo(carOfInterestBadge);
             badgeCloseButton.attr("class", "badge-close-button");
