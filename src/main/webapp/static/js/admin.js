@@ -9,6 +9,7 @@ $(function() {
     handleDialogShownAndHiddenEvents();
     handleDialogSaveEvents();
     handleDeleteEntryActionIconClicks();
+    EmilFreyUtil.handleLeadCarsOfInterestEvents();
 });
 
 function handleDialogSaveEvents() {

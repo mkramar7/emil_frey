@@ -129,7 +129,7 @@ EmilFreyUtil.showModalDialog = function(dialogId, entityId, fieldId) {
 
 // onDialogShown events
 EmilFreyUtil.onLeadDialogShown = function() {
-    var selectedLead = null;
+    let selectedLead = null;
     if ($("#edit-lead-id").val() !== "") {
         EmilFreyRest.fetchFromUrl("leads/" + $("#edit-lead-id").val(), function(lead) {
             selectedLead = lead;
@@ -140,30 +140,18 @@ EmilFreyUtil.onLeadDialogShown = function() {
     }
 
     function fillLeadEditForm() {
-        if (selectedLead) {
-            $("#edit-lead-text").val(selectedLead.lead);
-        }
-
-        if (!selectedLead) {
-            $("#lead-dialog .answer-input-group").each(function(index) {
-                let i = index + 1;
-                $(this).data("for-answer-id", i);
-                if (i == 1) {
-                    $(this).find(".edit-lead-answer-radio").prop("checked", true);
-                }
+        let leadAllCarsSelect = $("#edit-lead-cars-of-interest-all-cars-list");
+        EmilFreyRest.fetchFromUrl("cars", function(cars) {
+            cars.forEach(car => {
+                let leadInterestCarOption = $(document.createElement("option")).appendTo(leadAllCarsSelect);
+                leadInterestCarOption.attr("value", car.id);
+                leadInterestCarOption.text(car.manufacturer + " " + car.model);
             });
-        } else {
-            let i=0;
-            for (let answerId in selectedLead.answers) {
-                let answer = selectedLead.answers[answerId];
-                let answerInputGroup = $("#lead-dialog .answer-input-group:eq('" + i + "')");
-                answerInputGroup.find(".edit-lead-answer-text").val(answer);
-                answerInputGroup.data("for-answer-id", answerId);
-                if (parseInt(answerId) === selectedLead.correctAnswerId) {
-                    answerInputGroup.find(".edit-lead-answer-radio").prop("checked", true);
-                }
-                i++;
-            }
+        });
+
+        if (selectedLead) {
+            $("#edit-lead-first-name").val(selectedLead.firstName);
+            $("#edit-lead-last-name").val(selectedLead.lastName);
         }
 
         $("#edit-lead-text").focus();
@@ -171,7 +159,7 @@ EmilFreyUtil.onLeadDialogShown = function() {
 };
 
 EmilFreyUtil.onCarCategoryDialogShown = function() {
-    var selectedCarCategory = null;
+    let selectedCarCategory = null;
     if ($("#edit-car-category-id").val() !== "") {
         EmilFreyRest.fetchFromUrl("car_categories/" + $("#edit-car-category-id").val(), function(carCategory) {
             selectedCarCategory = carCategory;
@@ -191,7 +179,7 @@ EmilFreyUtil.onCarCategoryDialogShown = function() {
 };
 
 EmilFreyUtil.onCarDialogShown = function() {
-    var selectedCar = null;
+    let selectedCar = null;
     if ($("#edit-car-id").val() !== "") {
         EmilFreyRest.fetchFromUrl("cars/" + $("#edit-car-id").val(), function(car) {
             selectedCar = car;
@@ -231,7 +219,10 @@ EmilFreyUtil.onLeadDialogHidden = function() {
 
     $("#edit-lead-id").val("");
     $("#edit-lead-first-name").val("");
-    $("#edit-lead-last-name").html("");
+    $("#edit-lead-last-name").val("");
+    $("#edit-lead-cars-of-interest-all-cars-list").html("");
+    $("#edit-lead-cars-of-interest-list").html("");
+
 };
 
 EmilFreyUtil.onCarCategoryDialogHidden = function() {
@@ -322,6 +313,50 @@ EmilFreyUtil.saveCar = function() {
         $("#car-dialog").modal("hide");
         EmilFreyUtil.loadCarsTableWithData();
         EmilFreyUtil.showErrorMessage("There was an error while trying to save car. Please try again or contact administrator.");
+    });
+};
+
+EmilFreyUtil.handleLeadCarsOfInterestEvents = function() {
+    $("#lead-add-car-of-interest").click(function() {
+        let leadCarOfInterestSelectedId = $("#edit-lead-cars-of-interest-all-cars-list option:selected").attr("value");
+
+        let carsOfInterestTagsList = $("#edit-lead-cars-of-interest-list");
+        let carIsAlreadySelected = false;
+        carsOfInterestTagsList.find(".badge-lead-car-of-interest").each(function() {
+            if ($(this).data("id") == leadCarOfInterestSelectedId) {
+                carIsAlreadySelected = true;
+                return;
+            }
+        });
+
+        if (carIsAlreadySelected) {
+            return;
+        }
+
+        EmilFreyRest.fetchFromUrl("cars/" + leadCarOfInterestSelectedId, function(car) {
+            if (!car) {
+                return;
+            }
+
+            let carOfInterestBadge = $(document.createElement("span")).appendTo(carsOfInterestTagsList);
+            carOfInterestBadge.attr("class", "badge badge-primary badge-lead-car-of-interest");
+            carOfInterestBadge.html(car.manufacturer + " " + car.model);
+
+            carOfInterestBadge.data("id", car.id);
+            carOfInterestBadge.data("manufacturer", car.manufacturer);
+            carOfInterestBadge.data("model", car.mode);
+            carOfInterestBadge.data("manufacturing-date", car.manufacturingDate);
+
+            let badgeCloseButton = $(document.createElement("span")).appendTo(carOfInterestBadge);
+            badgeCloseButton.attr("class", "badge-close-button");
+            badgeCloseButton.html("&#10006;");
+
+            badgeCloseButton.click(function() {
+                carOfInterestBadge.fadeOut("fast", function() {
+                    $(this).remove();
+                });
+            });
+        });
     });
 };
 
