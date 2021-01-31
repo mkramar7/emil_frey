@@ -193,14 +193,27 @@
                                     Please enter last name for lead.
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <label class="input-group-text" for="edit-lead-cars-of-interest">Cars of interest</label>
+                            <div class="card lead-cars-of-interest-card">
+                                <div class="card-header">
+                                    Cars of interest
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <select class="custom-select" id="edit-lead-cars-of-interest-all-cars-list">
+                                                
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button id="lead-add-car-of-interest" class="btn btn-outline-secondary" type="button">Add car</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <select class="custom-select" id="edit-lead-cars-of-interest">
-
-                                    </select>
+                                    <div id="edit-lead-cars-of-interest-list">
+                                        <span class="badge badge-primary badge-lead-car-of-interest">
+                                            BMW 3 Series
+                                            <span class="badge-close-button">&#10006;</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </form>
