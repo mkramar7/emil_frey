@@ -134,11 +134,9 @@ EmilFreyUtil.onLeadDialogShown = function() {
         EmilFreyRest.fetchFromUrl("leads/" + $("#edit-lead-id").val(), function(lead) {
             selectedLead = lead;
             fillLeadEditForm();
-            EmilFreyUtil.checkFormValidity($("#lead-dialog"));
         });
     } else {
         fillLeadEditForm();
-        EmilFreyUtil.checkFormValidity($("#lead-dialog"));
     }
 
     function fillLeadEditForm() {
@@ -178,11 +176,9 @@ EmilFreyUtil.onCarCategoryDialogShown = function() {
         EmilFreyRest.fetchFromUrl("car_categories/" + $("#edit-car-category-id").val(), function(carCategory) {
             selectedCarCategory = carCategory;
             fillCarCategoryEditForm();
-            EmilFreyUtil.checkFormValidity($("#car-category-dialog"));
         });
     } else {
         fillCarCategoryEditForm();
-        EmilFreyUtil.checkFormValidity($("#car-category-dialog"));
     }
 
     function fillCarCategoryEditForm() {
@@ -200,11 +196,9 @@ EmilFreyUtil.onCarDialogShown = function() {
         EmilFreyRest.fetchFromUrl("cars/" + $("#edit-car-id").val(), function(car) {
             selectedCar = car;
             fillCarEditForm();
-            EmilFreyUtil.checkFormValidity($("#car-dialog"));
         });
     } else {
         fillCarEditForm();
-        EmilFreyUtil.checkFormValidity($("#car-dialog"));
     }
 
     function fillCarEditForm() {
