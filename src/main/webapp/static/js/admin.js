@@ -9,6 +9,7 @@ $(function() {
     handleDialogShownAndHiddenEvents();
     handleDialogSaveEvents();
     handleDeleteEntryActionIconClicks();
+    handleSearchingBehavior();
     EmilFreyUtil.handleLeadCarsOfInterestEvents();
 });
 
@@ -108,3 +109,17 @@ function handleCheckboxesBehavior() {
         allBodyCheckboxes.prop("checked", $(this).is(":checked"));
     });
 };
+
+function handleSearchingBehavior() {
+    $("#search-leads, #search-car-categories, #search-cars").keyup(function (e) {
+        if (e.which == 13) {
+            if ($(this).attr("id") == "search-leads") {
+                EmilFreyUtil.loadLeadsTableWithData();
+            } else if ($(this).attr("id") == "search-car-categories") {
+                EmilFreyUtil.loadCarCategoriesTableWithData();
+            } else if ($(this).attr("id") == "search-cars") {
+                EmilFreyUtil.loadCarsTableWithData();
+            }
+        }
+    });
+}

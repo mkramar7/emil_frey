@@ -19,8 +19,9 @@ public class CarsResource {
     private CarsService carsService;
 
     @GET
-    public Response getAll() {
-        return Response.ok(carsService.getAll()).build();
+    public Response getAll(@QueryParam("name") String name) {
+        return Response.ok(name == null || name.isEmpty() ?
+                carsService.getAll() : carsService.getAll(name)).build();
     }
 
     @GET

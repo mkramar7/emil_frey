@@ -6,7 +6,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "car_categories")
 @NamedQueries({
-    @NamedQuery(name = "CarCategories.findAll", query = "SELECT cc FROM CarCategory cc")
+    @NamedQuery(name = "CarCategories.findAll", query = "SELECT cc FROM CarCategory cc"),
+    @NamedQuery(name = "CarCategories.findAllWithName", query = "SELECT cc FROM CarCategory cc WHERE cc.categoryName LIKE CONCAT('%', :name, '%')")
 })
 public class CarCategory implements Serializable {
     private static final long serialVersionUID = 3480637050478827631L;

@@ -19,8 +19,9 @@ public class LeadsResource {
     private LeadsService leadsService;
 
     @GET
-    public Response getAll() {
-        return Response.ok(leadsService.getAll()).build();
+    public Response getAll(@QueryParam("name") String name) {
+        return Response.ok(name == null || name.isEmpty() ?
+                leadsService.getAll() : leadsService.getAll(name)).build();
     }
 
     @GET

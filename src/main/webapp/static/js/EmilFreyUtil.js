@@ -3,7 +3,9 @@ let EmilFreyUtil = function() {};
 EmilFreyUtil.loadLeadsTableWithData = function() {
     let tableBody = EmilFreyUtil.clearAndGetTableBody("leads-table");
 
-    EmilFreyRest.fetchFromUrl("leads", function(leads) {
+    let leadsSearchTerm = $("#search-leads").val();
+    let leadsServiceUrl = "leads" + (!leadsSearchTerm ? "" : "?name=" + leadsSearchTerm);
+    EmilFreyRest.fetchFromUrl(leadsServiceUrl, function(leads) {
         leads.forEach((lead, i) => {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
@@ -22,7 +24,9 @@ EmilFreyUtil.loadLeadsTableWithData = function() {
 EmilFreyUtil.loadCarCategoriesTableWithData = function() {
     let tableBody = EmilFreyUtil.clearAndGetTableBody("car-categories-table");
 
-    EmilFreyRest.fetchFromUrl("car_categories", function(carCategories) {
+    let carCategoriesSearchTerm = $("#search-car-categories").val();
+    let carCategoriesServiceUrl = "car_categories" + (!carCategoriesSearchTerm ? "" : "?name=" + carCategoriesSearchTerm);
+    EmilFreyRest.fetchFromUrl(carCategoriesServiceUrl, function(carCategories) {
         carCategories.forEach((carCategory, i) => {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
@@ -39,7 +43,9 @@ EmilFreyUtil.loadCarCategoriesTableWithData = function() {
 EmilFreyUtil.loadCarsTableWithData = function() {
     let tableBody = EmilFreyUtil.clearAndGetTableBody("cars-table");
 
-    EmilFreyRest.fetchFromUrl("cars", function(cars) {
+    let carsSearchTerm = $("#search-cars").val();
+    let carsServiceUrl = "cars" + (!carsSearchTerm ? "" : "?name=" + carsSearchTerm);
+    EmilFreyRest.fetchFromUrl(carsServiceUrl, function(cars) {
         cars.forEach((car, i) => {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);

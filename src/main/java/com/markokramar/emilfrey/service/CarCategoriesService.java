@@ -1,10 +1,13 @@
 package com.markokramar.emilfrey.service;
 
+import antlr.StringUtils;
+import com.markokramar.emilfrey.model.Car;
 import com.markokramar.emilfrey.model.CarCategory;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Stateless
@@ -13,7 +16,12 @@ public class CarCategoriesService {
     @PersistenceContext
     private EntityManager em;
 
-    public List getAll() {
+    public List<CarCategory> getAll(String namePart) {
+        TypedQuery<CarCategory> query = em.createNamedQuery("CarCategories.findAllWithName", CarCategory.class);
+        return query.setParameter("name", namePart).getResultList();
+    }
+
+    public List<CarCategory> getAll() {
         return em.createNamedQuery("CarCategories.findAll", CarCategory.class).getResultList();
     }
 
