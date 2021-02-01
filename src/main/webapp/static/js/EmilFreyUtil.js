@@ -13,7 +13,13 @@ EmilFreyUtil.loadLeadsTableWithData = function() {
             EmilFreyUtil.createDataCell(lead.id, rowElem, true, true);
             EmilFreyUtil.createDataCell(lead.firstName, rowElem);
             EmilFreyUtil.createDataCell(lead.lastName, rowElem);
-            EmilFreyUtil.createListCell(lead.carsOfInterest.map(carOfInterest => carOfInterest.manufacturer + " " + carOfInterest.model), rowElem);
+
+            var leadCarsOfInterest = lead.carsOfInterest.map(carOfInterest => carOfInterest.manufacturer + " " + carOfInterest.model);
+            if (leadCarsOfInterest.length == 0) {
+                EmilFreyUtil.createDataCell("", rowElem);
+            } else {
+                EmilFreyUtil.createListCell(leadCarsOfInterest, rowElem);
+            }
             EmilFreyUtil.createActionsCell(rowElem, lead.id);
         });
 

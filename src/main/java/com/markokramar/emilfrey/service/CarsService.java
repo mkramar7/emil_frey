@@ -1,7 +1,6 @@
 package com.markokramar.emilfrey.service;
 
 import com.markokramar.emilfrey.model.Car;
-import com.markokramar.emilfrey.model.CarCategory;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

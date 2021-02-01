@@ -10,8 +10,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
-
 @RequestScoped
 @Path("car_categories")
 @Produces(MediaType.APPLICATION_JSON)
@@ -31,13 +29,29 @@ public class CarCategoriesResource {
     @Path("{id}")
     public Response getCarCategory(@PathParam("id") Long id) {
         CarCategory carCategory = carCategoriesService.findById(id);
+        if (carCategory == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Car category not found for ID: " + id).build();
+        }
+
         return Response.ok(carCategory).build();
     }
 
     @PUT
     @Path("{id}")
     public Response update(@PathParam("id") Long id, CarCategory carCategory) {
+        if (id == null) {
+            return Response.serverError().entity("ID cannot be blank").build();
+        }
+
+        if (carCategory == null) {
+            return Response.serverError().entity("Car category param cannot be blank").build();
+        }
+
         CarCategory carCategoryToUpdate = carCategoriesService.findById(id);
+        if (carCategoryToUpdate == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Car category not found for ID: " + id).build();
+        }
+
         carCategoryToUpdate.setCategoryName(carCategory.getCategoryName());
         carCategoriesService.update(carCategoryToUpdate);
         return Response.ok().build();
@@ -52,7 +66,15 @@ public class CarCategoriesResource {
     @DELETE
     @Path("{id}")
     public Response delete(@PathParam("id") Long id) {
+        if (id == null) {
+            return Response.serverError().entity("ID cannot be blank").build();
+        }
+
         CarCategory carCategoryToDelete = carCategoriesService.findById(id);
+        if (carCategoryToDelete == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Car category not found for ID: " + id).build();
+        }
+
         carCategoriesService.delete(carCategoryToDelete);
         return Response.ok().build();
     }
@@ -60,9 +82,7 @@ public class CarCategoriesResource {
     @DELETE
     public Response delete(List<Long> ids) {
         if (ids == null || ids.isEmpty()) {
-            throw new WebApplicationException(
-                Response.status(BAD_REQUEST).entity("Ids parameter to delete is mandatory").build()
-            );
+            return Response.serverError().entity("IDs need to be provided").build();
         }
 
         carCategoriesService.delete(ids);
