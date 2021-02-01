@@ -188,6 +188,9 @@ EmilFreyUtil.onLeadDialogShown = function() {
         if (selectedLead) {
             $("#edit-lead-first-name").val(selectedLead.firstName);
             $("#edit-lead-last-name").val(selectedLead.lastName);
+            selectedLead.carsOfInterest.forEach(car => {
+                EmilFreyUtil.addCarOfInterest(car);
+            });
         }
 
         $("#edit-lead-text").focus();
@@ -388,30 +391,34 @@ EmilFreyUtil.handleLeadCarsOfInterestEvents = function() {
                 return;
             }
 
-            let carOfInterestBadge = $(document.createElement("span")).appendTo(carsOfInterestTagsList);
-            carOfInterestBadge.attr("class", "badge badge-primary badge-lead-car-of-interest");
-            carOfInterestBadge.html(car.manufacturer + " " + car.model);
-
-            carOfInterestBadge.data("id", car.id);
-            carOfInterestBadge.data("manufacturer", car.manufacturer);
-            carOfInterestBadge.data("model", car.mode);
-            carOfInterestBadge.data("model-year", car.modelYear);
-
-            carOfInterestBadge.data("car-category-id", car.category.id);
-            carOfInterestBadge.data("car-category-name", car.category.categoryName);
-
-            let badgeCloseButton = $(document.createElement("span")).appendTo(carOfInterestBadge);
-            badgeCloseButton.attr("class", "badge-close-button");
-            badgeCloseButton.html("&#10006;");
-
-            badgeCloseButton.click(function() {
-                carOfInterestBadge.fadeOut("fast", function() {
-                    $(this).remove();
-                });
-            });
+            EmilFreyUtil.addCarOfInterest(car);
         });
     });
 };
+
+EmilFreyUtil.addCarOfInterest = function(car) {
+    let carOfInterestBadge = $(document.createElement("span")).appendTo($("#edit-lead-cars-of-interest-list"));
+    carOfInterestBadge.attr("class", "badge badge-primary badge-lead-car-of-interest");
+    carOfInterestBadge.html(car.manufacturer + " " + car.model);
+
+    carOfInterestBadge.data("id", car.id);
+    carOfInterestBadge.data("manufacturer", car.manufacturer);
+    carOfInterestBadge.data("model", car.mode);
+    carOfInterestBadge.data("model-year", car.modelYear);
+
+    carOfInterestBadge.data("car-category-id", car.category.id);
+    carOfInterestBadge.data("car-category-name", car.category.categoryName);
+
+    let badgeCloseButton = $(document.createElement("span")).appendTo(carOfInterestBadge);
+    badgeCloseButton.attr("class", "badge-close-button");
+    badgeCloseButton.html("&#10006;");
+
+    badgeCloseButton.click(function() {
+        carOfInterestBadge.fadeOut("fast", function() {
+            $(this).remove();
+        });
+    });
+}
 
 EmilFreyUtil.showSuccessMessage = function(message) {
     EmilFreyUtil.showMessage(message, "success");
