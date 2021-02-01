@@ -16,7 +16,7 @@ EmilFreyRest.saveEntity = function(uri, entity, method, successCallback, failure
         },
         body: JSON.stringify(entity),
     }).then(data => {
-        if (data.status == 500) {
+        if (data.status == 500 || data.status == 400) {
             failureCallback();
         } else {
             successCallback(data);
@@ -27,11 +27,33 @@ EmilFreyRest.saveEntity = function(uri, entity, method, successCallback, failure
     });
 };
 
-EmilFreyRest.deleteEntity = function(endpointUri, id, successCallback) {
+EmilFreyRest.deleteEntity = function(endpointUri, id, successCallback, failureCallback) {
     fetch(endpointUri + "/" + id, {
         method: "DELETE"
-    }).then(() => {
-        successCallback();
+    }).then((data) => {
+        if (data.status == 500 || data.status == 400) {
+            failureCallback();
+        } else {
+            successCallback();
+        }
+    }).catch((error) => {
+        console.error("Error:", error);
+    });
+};
+
+EmilFreyRest.deleteMultipleEntities = function(endpointUri, ids, successCallback, failureCallback) {
+    fetch(endpointUri, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(ids)
+    }).then((data) => {
+        if (data.status == 500 || data.status == 400) {
+            failureCallback();
+        } else {
+            successCallback();
+        }
     }).catch((error) => {
         console.error("Error:", error);
     });

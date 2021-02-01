@@ -6,7 +6,9 @@ import com.markokramar.emilfrey.model.Lead;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Stateless
@@ -42,6 +44,13 @@ public class LeadsService {
         }
 
         em.remove(lead);
+    }
+
+    @Transactional
+    public void delete(List<Long> ids) {
+        Query query = em.createNamedQuery("Leads.deleteMultiple");
+        query.setParameter("ids", ids);
+        query.executeUpdate();
     }
 
 }

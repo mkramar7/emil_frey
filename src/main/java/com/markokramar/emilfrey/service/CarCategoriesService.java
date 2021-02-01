@@ -7,7 +7,9 @@ import com.markokramar.emilfrey.model.CarCategory;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Stateless
@@ -43,5 +45,12 @@ public class CarCategoriesService {
         }
 
         em.remove(carCategory);
+    }
+
+    @Transactional
+    public void delete(List<Long> ids) {
+        Query query = em.createNamedQuery("CarCategories.deleteMultiple");
+        query.setParameter("ids", ids);
+        query.executeUpdate();
     }
 }

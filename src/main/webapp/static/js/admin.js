@@ -10,6 +10,7 @@ $(function() {
     handleDialogSaveEvents();
     handleDeleteEntryActionIconClicks();
     handleSearchingBehavior();
+    handleDeleteSelectedBehavior();
     EmilFreyUtil.handleLeadCarsOfInterestEvents();
 });
 
@@ -62,6 +63,8 @@ function handleDeleteEntryActionIconClicks() {
            EmilFreyRest.deleteEntity("leads", idToDelete, function() {
                EmilFreyUtil.loadLeadsTableWithData();
                EmilFreyUtil.showSuccessMessage("Lead deleted successfully!");
+           }, function() {
+               EmilFreyUtil.showErrorMessage("There was an error while trying to delete lead! Please contact administrator.");
            });
         }
     });
@@ -72,6 +75,8 @@ function handleDeleteEntryActionIconClicks() {
             EmilFreyRest.deleteEntity("car_categories", idToDelete, function() {
                 EmilFreyUtil.loadCarCategoriesTableWithData();
                 EmilFreyUtil.showSuccessMessage("Car category deleted successfully!");
+            }, function() {
+                EmilFreyUtil.showErrorMessage("There was an error while trying to delete car category! Please contact administrator.");
             });
         }
     });
@@ -82,6 +87,8 @@ function handleDeleteEntryActionIconClicks() {
             EmilFreyRest.deleteEntity("cars", idToDelete, function() {
                 EmilFreyUtil.loadCarsTableWithData();
                 EmilFreyUtil.showSuccessMessage("Car deleted successfully!");
+            }, function() {
+                EmilFreyUtil.showErrorMessage("There was an error while trying to delete car! Please contact administrator.");
             });
         }
     });
@@ -122,4 +129,60 @@ function handleSearchingBehavior() {
             }
         }
     });
-}
+};
+
+function handleDeleteSelectedBehavior() {
+    initCheckboxEvents("leads");
+    initCheckboxEvents("car-categories");
+    initCheckboxEvents("cars");
+
+    initDeleteButtonEvents("leads");
+    initDeleteButtonEvents("car-categories");
+    initDeleteButtonEvents("cars");
+};
+
+function initDeleteButtonEvents(entity) {
+    $("#delete-selected-" + entity).click(function() {
+        let ids = [];
+        $("#" + entity + "-table tbody .checkbox-col input").each(function() {
+            if (this.checked) {
+                ids.push($(this).closest("tr").find("td.identity-cell").data("id"));
+            }
+        });
+
+        if (!confirm("Are you sure that you want to delete selected " + entity.replaceAll("-", " ") + "?")) {
+            return;
+        }
+
+        EmilFreyRest.deleteMultipleEntities(entity.replaceAll("-", "_"), ids, function() {
+            $("#delete-selected-" + entity).prop("disabled", true);
+
+            if (entity == "leads") {
+                EmilFreyUtil.loadLeadsTableWithData();
+                EmilFreyUtil.showSuccessMessage("Selected leads deleted successfully!");
+            } else if (entity == "cars") {
+                EmilFreyUtil.loadCarsTableWithData();
+                EmilFreyUtil.showSuccessMessage("Selected cars deleted successfully!");
+            } else if (entity == "car-categories") {
+                EmilFreyUtil.loadCarCategoriesTableWithData();
+                EmilFreyUtil.showSuccessMessage("Selected car categories deleted successfully!");
+            }
+        }, function() {
+            EmilFreyUtil.showErrorMessage("There was an error while trying to delete selected " + entity.replaceAll("-", " "));
+        });
+    });
+};
+
+function initCheckboxEvents(entity) {
+    $(document).on("change", "#" + entity + "-table .checkbox-col input", function() {
+        let atLeastOneEnabled = false;
+        $("#" + entity + "-table tbody .checkbox-col input").each(function() {
+            if (this.checked) {
+                atLeastOneEnabled = true;
+                return false;
+            }
+        });
+
+        $("#delete-selected-" + entity).prop("disabled", !atLeastOneEnabled);
+    });
+};

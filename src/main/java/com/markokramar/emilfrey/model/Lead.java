@@ -10,7 +10,8 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "Leads.findAll", query = "SELECT ld FROM Lead ld"),
         @NamedQuery(name = "Leads.findAllWithName", query = "SELECT ld FROM Lead ld WHERE ld.firstName LIKE CONCAT('%', :name, '%') " +
-                "OR ld.lastName LIKE CONCAT('%', :name, '%')")
+                "OR ld.lastName LIKE CONCAT('%', :name, '%')"),
+        @NamedQuery(name = "Leads.deleteMultiple", query = "DELETE FROM Lead ld WHERE ld.id IN (:ids)")
 })
 public class Lead implements Serializable {
     private static final long serialVersionUID = -6951163276266605171L;

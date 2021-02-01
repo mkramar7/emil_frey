@@ -10,7 +10,7 @@ EmilFreyUtil.loadLeadsTableWithData = function() {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
             EmilFreyUtil.createRowNumCell(i+1, rowElem);
-            EmilFreyUtil.createDataCell(lead.id, rowElem, true);
+            EmilFreyUtil.createDataCell(lead.id, rowElem, true, true);
             EmilFreyUtil.createDataCell(lead.firstName, rowElem);
             EmilFreyUtil.createDataCell(lead.lastName, rowElem);
             EmilFreyUtil.createListCell(lead.carsOfInterest.map(carOfInterest => carOfInterest.manufacturer + " " + carOfInterest.model), rowElem);
@@ -31,7 +31,7 @@ EmilFreyUtil.loadCarCategoriesTableWithData = function() {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
             EmilFreyUtil.createRowNumCell(i+1, rowElem);
-            EmilFreyUtil.createDataCell(carCategory.id, rowElem, true);
+            EmilFreyUtil.createDataCell(carCategory.id, rowElem, true, true);
             EmilFreyUtil.createDataCell(carCategory.categoryName, rowElem);
             EmilFreyUtil.createActionsCell(rowElem, carCategory.id);
         });
@@ -50,7 +50,7 @@ EmilFreyUtil.loadCarsTableWithData = function() {
             let rowElem = EmilFreyUtil.createRow(tableBody);
             EmilFreyUtil.createCheckboxCell(i+1, rowElem);
             EmilFreyUtil.createRowNumCell(i+1, rowElem);
-            EmilFreyUtil.createDataCell(car.id, rowElem, true);
+            EmilFreyUtil.createDataCell(car.id, rowElem, true, true);
             EmilFreyUtil.createDataCell(car.manufacturer, rowElem);
             EmilFreyUtil.createDataCell(car.model, rowElem);
             EmilFreyUtil.createDataCell(car.manufacturingDate, rowElem);
@@ -81,12 +81,19 @@ EmilFreyUtil.createRowNumCell = function(index, parentElem) {
     rowNumCell.text(index);
 };
 
-EmilFreyUtil.createDataCell = function(value, parentElem, hidden) {
+EmilFreyUtil.createDataCell = function(value, parentElem, hidden, identityCell) {
     let cell = $(document.createElement("td")).appendTo(parentElem);
     cell.text(value);
+
     if (hidden) {
         cell.css("display", "none");
     }
+
+    if (identityCell) {
+        cell.addClass("identity-cell");
+        cell.data("id", value);
+    }
+
     return cell;
 };
 

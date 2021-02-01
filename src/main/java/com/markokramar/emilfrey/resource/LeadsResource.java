@@ -8,6 +8,9 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
+
+import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
 @RequestScoped
 @Path("leads")
@@ -53,6 +56,18 @@ public class LeadsResource {
     public Response delete(@PathParam("id") Long id) {
         Lead leadToDelete = leadsService.findById(id);
         leadsService.delete(leadToDelete);
+        return Response.ok().build();
+    }
+
+    @DELETE
+    public Response delete(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            throw new WebApplicationException(
+                    Response.status(BAD_REQUEST).entity("Ids parameter to delete is mandatory").build()
+            );
+        }
+
+        leadsService.delete(ids);
         return Response.ok().build();
     }
 }

@@ -17,7 +17,8 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "Cars.findAll", query = "SELECT c FROM Car c"),
     @NamedQuery(name = "Cars.findAllWithMfrOrModel", query = "SELECT c FROM Car c WHERE c.manufacturer LIKE CONCAT('%', :name, '%') " +
-            "OR c.model LIKE CONCAT('%', :name, '%')")
+            "OR c.model LIKE CONCAT('%', :name, '%')"),
+    @NamedQuery(name = "Cars.deleteMultiple", query = "DELETE FROM Car c WHERE c.id IN (:ids)")
 })
 public class Car implements Serializable {
     private static final long serialVersionUID = -1677456857809574882L;

@@ -7,7 +7,8 @@ import java.io.Serializable;
 @Table(name = "car_categories")
 @NamedQueries({
     @NamedQuery(name = "CarCategories.findAll", query = "SELECT cc FROM CarCategory cc"),
-    @NamedQuery(name = "CarCategories.findAllWithName", query = "SELECT cc FROM CarCategory cc WHERE cc.categoryName LIKE CONCAT('%', :name, '%')")
+    @NamedQuery(name = "CarCategories.findAllWithName", query = "SELECT cc FROM CarCategory cc WHERE cc.categoryName LIKE CONCAT('%', :name, '%')"),
+    @NamedQuery(name = "CarCategories.deleteMultiple", query = "DELETE FROM CarCategory cc WHERE cc.id IN (:ids)")
 })
 public class CarCategory implements Serializable {
     private static final long serialVersionUID = 3480637050478827631L;
