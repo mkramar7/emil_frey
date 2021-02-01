@@ -4,7 +4,7 @@ EmilFreyUtil.loadLeadsTableWithData = function() {
     let tableBody = EmilFreyUtil.clearAndGetTableBody("leads-table");
 
     let leadsSearchTerm = $("#search-leads").val();
-    let leadsServiceUrl = "leads" + (!leadsSearchTerm ? "" : "?name=" + leadsSearchTerm);
+    let leadsServiceUrl = "leads" + (!leadsSearchTerm ? "" : "?firstName=" + leadsSearchTerm + "&lastName=" + leadsSearchTerm);
     EmilFreyRest.fetchFromUrl(leadsServiceUrl, function(leads) {
         leads.forEach((lead, i) => {
             let rowElem = EmilFreyUtil.createRow(tableBody);

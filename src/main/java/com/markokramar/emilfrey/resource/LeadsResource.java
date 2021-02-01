@@ -20,9 +20,14 @@ public class LeadsResource {
     private LeadsService leadsService;
 
     @GET
-    public Response getAll(@QueryParam("name") String name) {
-        return Response.ok(name == null || name.isEmpty() ?
-                leadsService.getAll() : leadsService.getAll(name)).build();
+    public Response getAll(@QueryParam("firstName") String firstName, @QueryParam("lastName") String lastName) {
+        boolean firstNameEmpty = firstName == null || firstName.isEmpty();
+        boolean lastNameEmpty = lastName == null || lastName.isEmpty();
+        if (firstNameEmpty && lastNameEmpty) {
+            return Response.ok(leadsService.getAll()).build();
+        }
+
+        return Response.ok(leadsService.getAll(firstNameEmpty ? "" : firstName, lastNameEmpty ? "" : lastName)).build();
     }
 
     @GET

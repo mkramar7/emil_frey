@@ -21,9 +21,12 @@ public class LeadsService {
         return em.createNamedQuery("Leads.findAll", Lead.class).getResultList();
     }
 
-    public List<Lead> getAll(String namePart) {
-        TypedQuery<Lead> query = em.createNamedQuery("Leads.findAllWithName", Lead.class);
-        return query.setParameter("name", namePart).getResultList();
+    public List<Lead> getAll(String firstNamePart, String lastNamePart) {
+        TypedQuery<Lead> query = em.createNamedQuery("Leads.findByFirstNameOrLastName", Lead.class)
+                .setParameter("firstName", firstNamePart)
+                .setParameter("lastName", lastNamePart);
+
+        return query.getResultList();
     }
 
     public Lead findById(Long id) {
