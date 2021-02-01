@@ -1,15 +1,9 @@
 package com.markokramar.emilfrey.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import javax.persistence.*;
-import javax.validation.constraints.PastOrPresent;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -38,11 +32,8 @@ public class Car implements Serializable {
     @JoinColumn(name = "category_id", nullable = false)
     private CarCategory category;
 
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @PastOrPresent
-    @Column(name = "manufacturing_date")
-    private LocalDate manufacturingDate;
+    @Column(name = "model_year")
+    private Integer modelYear;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "carsOfInterest", fetch = FetchType.EAGER)
@@ -72,12 +63,12 @@ public class Car implements Serializable {
         this.model = model;
     }
 
-    public LocalDate getManufacturingDate() {
-        return manufacturingDate;
+    public Integer getModelYear() {
+        return modelYear;
     }
 
-    public void setManufacturingDate(LocalDate manufacturingDate) {
-        this.manufacturingDate = manufacturingDate;
+    public void setModelYear(Integer modelYear) {
+        this.modelYear = modelYear;
     }
 
     public CarCategory getCategory() {
@@ -103,7 +94,7 @@ public class Car implements Serializable {
                 ", manufacturer='" + manufacturer + '\'' +
                 ", model='" + model + '\'' +
                 ", category=" + category +
-                ", manufacturingDate=" + manufacturingDate +
+                ", modelYear=" + modelYear +
                 ", leads=" + leads +
                 '}';
     }

@@ -41,7 +41,7 @@ public class CarsResource {
         carToUpdate.setManufacturer(car.getManufacturer());
         carToUpdate.setModel(car.getModel());
         carToUpdate.setCategory(car.getCategory());
-        carToUpdate.setManufacturingDate(car.getManufacturingDate());
+        carToUpdate.setModelYear(car.getModelYear());
         carsService.update(carToUpdate);
         return Response.ok().build();
     }

@@ -53,7 +53,7 @@ EmilFreyUtil.loadCarsTableWithData = function() {
             EmilFreyUtil.createDataCell(car.id, rowElem, true, true);
             EmilFreyUtil.createDataCell(car.manufacturer, rowElem);
             EmilFreyUtil.createDataCell(car.model, rowElem);
-            EmilFreyUtil.createDataCell(car.manufacturingDate, rowElem);
+            EmilFreyUtil.createDataCell(car.modelYear, rowElem);
             EmilFreyUtil.createDataCell(car.category.categoryName, rowElem);
             EmilFreyUtil.createActionsCell(rowElem, car.id);
         });
@@ -223,7 +223,7 @@ EmilFreyUtil.onCarDialogShown = function() {
         if (selectedCar) {
             $("#edit-car-manufacturer").val(selectedCar.manufacturer);
             $("#edit-car-model").val(selectedCar.model);
-            $("#edit-car-manufacturing-date").val(selectedCar.manufacturingDate);
+            $("#edit-car-model-year").val(selectedCar.modelYear);
         }
 
         let carCategorySelect = $("#edit-car-category");
@@ -268,7 +268,7 @@ EmilFreyUtil.onCarDialogHidden = function() {
     $("#edit-car-id").val("");
     $("#edit-car-manufacturer").val("");
     $("#edit-car-model").val("");
-    $("#edit-car-manufacturing-date").val("");
+    $("#edit-car-model-year").val("");
     $("#edit-car-category").html("");
 };
 
@@ -287,7 +287,7 @@ EmilFreyUtil.saveLead = function() {
         carOfInterest.id = $(this).data("id");
         carOfInterest.manufacturer = $(this).data("manufacturer");
         carOfInterest.model = $(this).data("model");
-        carOfInterest.manufacturingDate = $(this).data("manufacturingDate");
+        carOfInterest.modelYear = $(this).data("modelYear");
 
         carOfInterest.category = {};
         carOfInterest.category.id = $(this).data("car-category-id");
@@ -340,7 +340,7 @@ EmilFreyUtil.saveCar = function() {
     let car = {};
     car.manufacturer = $("#edit-car-manufacturer").val();
     car.model = $("#edit-car-model").val();
-    car.manufacturingDate = $("#edit-car-manufacturing-date").val();
+    car.modelYear = $("#edit-car-model-year").val();
 
     car.category = {};
     car.category.id = $("#edit-car-category").val();
@@ -389,7 +389,7 @@ EmilFreyUtil.handleLeadCarsOfInterestEvents = function() {
             carOfInterestBadge.data("id", car.id);
             carOfInterestBadge.data("manufacturer", car.manufacturer);
             carOfInterestBadge.data("model", car.mode);
-            carOfInterestBadge.data("manufacturing-date", car.manufacturingDate);
+            carOfInterestBadge.data("model-year", car.modelYear);
 
             carOfInterestBadge.data("car-category-id", car.category.id);
             carOfInterestBadge.data("car-category-name", car.category.categoryName);
