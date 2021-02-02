@@ -26,5 +26,5 @@ Live demo is available at http://markokramar.com:8080/emilfrey/api/admin
 - MySQL DB
 - Hibernate
 - HTML5/CSS/JavaScript
-- jQUery
+- jQuery
 - Bootstrap
