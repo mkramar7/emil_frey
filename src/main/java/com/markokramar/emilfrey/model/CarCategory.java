@@ -1,7 +1,10 @@
 package com.markokramar.emilfrey.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "car_categories")
@@ -21,6 +24,10 @@ public class CarCategory implements Serializable {
     @Column(name = "category_name", nullable = false, unique = true)
     private String categoryName;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
+    private Set<Car> cars;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -35,6 +42,14 @@ public class CarCategory implements Serializable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
     }
 
     @Override
